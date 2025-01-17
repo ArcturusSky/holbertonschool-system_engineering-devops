@@ -1,0 +1,84 @@
+# Task 1 - Distributed web infrastructure
+
+- [Task 1 - Distributed web infrastructure](#task-1---distributed-web-infrastructure)
+  - [Diagram (click to zoom in)](#diagram-click-to-zoom-in)
+  - [Questions](#questions)
+    - [For every additional element, why are you adding it?](#for-every-additional-element-why-are-you-adding-it)
+    - [What distribution algorithm is your load balancer configured with, and how does it work?](#what-distribution-algorithm-is-your-load-balancer-configured-with-and-how-does-it-work)
+    - [Is your load balancer enabling an Active-Active or Active-Passive setup? Explain the difference.](#is-your-load-balancer-enabling-an-active-active-or-active-passive-setup-explain-the-difference)
+      - [Difference between Active-Active and Active-Passive:](#difference-between-active-active-and-active-passive)
+    - [How does a database Primary-Replica (Master-Slave) cluster work?](#how-does-a-database-primary-replica-master-slave-cluster-work)
+    - [What is the difference between the Primary node and the Replica node regarding the application?](#what-is-the-difference-between-the-primary-node-and-the-replica-node-regarding-the-application)
+
+
+## Diagram (click to zoom in)
+
+![Diagram](./1-distributed_web_infrastructure_diagram.png)
+
+## Questions
+
+### For every additional element, why are you adding it?
+
+1. **Load Balancer**:  
+   - **Reason**: To distribute incoming traffic evenly between the servers, ensuring no single server becomes overwhelmed. It also improves reliability and performance.  
+   - **Benefit**: Prevents **SPOF** (Single Point of Failure) by redirecting traffic to available servers if one goes down.
+
+2. **2nd Web Server**:  
+   - **Reason**: To provide redundancy and scalability. With two web servers, the infrastructure can handle more traffic and ensure availability even if one server fails.  
+   - **Benefit**: Ensures **high availability** and supports horizontal scaling for increased traffic.
+
+3. **Database Replica**:  
+   - **Reason**: To improve database read performance and provide redundancy. The replica serves read queries, reducing the load on the primary database.  
+   - **Benefit**: Improves performance for read-heavy applications and provides a failover option in case the primary database fails.
+
+---
+
+### What distribution algorithm is your load balancer configured with, and how does it work?
+
+- **Algorithm**: HAProxy
+  - **How it works**: The load balancer sends each incoming request to the next server in a circular order. For example, if there are two servers (A and B), the first request goes to A, the second to B, the third back to A, and so on.  
+  - **Benefit**: Simple and evenly distributes traffic, ensuring both servers share the load equally.
+
+---
+
+### Is your load balancer enabling an Active-Active or Active-Passive setup? Explain the difference.
+
+- **Setup**: Active-Active  
+  - **Explanation**: Both servers are actively handling traffic simultaneously. If one fails, the load balancer continues routing traffic to the remaining server(s).  
+
+#### Difference between Active-Active and Active-Passive:
+1. **Active-Active**:  
+   - Multiple servers or resources are running and actively serving traffic simultaneously.  
+   - Benefits: Higher resource utilization and better scalability.  
+   - Example: Both web servers process requests concurrently.
+   
+2. **Active-Passive**:  
+   - Only one server/resource is active at a time. The passive server remains idle until the active one fails, at which point it takes over.  
+   - Benefits: Simpler management and resource savings but reduced utilization.
+
+---
+
+### How does a database Primary-Replica (Master-Slave) cluster work?
+
+- **Primary-Replica Architecture**:
+  - The **primary node** handles all write operations and synchronizes data changes to the **replica node(s)**.
+  - The **replica nodes** are read-only copies of the primary database, receiving updates through asynchronous or synchronous replication.  
+  - **Replication Process**:
+    1. A change (write or update) is made to the primary database.
+    2. The change is recorded in a transaction log.
+    3. The replica database reads the log and applies the same changes to stay in sync.
+
+---
+
+### What is the difference between the Primary node and the Replica node regarding the application?
+
+1. **Primary Node**:  
+   - Handles all **write** and **update** operations from the application.  
+   - Acts as the single source of truth for the data.  
+   - Example: User registration, updating a profile, or placing an order.
+
+2. **Replica Node**:  
+   - Handles **read** operations only.  
+   - Reduces load on the primary database by processing queries like fetching product catalogs or user profiles.  
+   - Example: Serving a user's news feed or browsing data-heavy reports.
+

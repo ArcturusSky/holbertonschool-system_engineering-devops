@@ -1,0 +1,95 @@
+# Task 2 - Secured and monitored web infrastructure
+
+## Diagram (click to zoom in)
+
+![Diagram](./advanced_web_infrastructure_diagram.png)
+
+## Questions
+
+### For every additional element, why are you adding it?
+
+1. **3 Firewalls**:  
+   - **Reason**: To enhance security by protecting the infrastructure from unauthorized access, malicious traffic, and potential attacks.  
+   - **Benefit**: With three firewalls, the traffic can be filtered and blocked at different levels, ensuring a layered security approach. This also ensures redundancy and availability in case one firewall fails.
+
+2. **1 SSL Certificate for www.foobar.com over HTTPS**:  
+   - **Reason**: To encrypt the traffic between the client and the server, ensuring that sensitive data like login credentials, credit card information, or personal data is securely transmitted.  
+   - **Benefit**: Protects user privacy, prevents man-in-the-middle attacks, and builds trust with users by showing a secure connection.
+
+3. **3 Monitoring Clients (Data collectors for services like Sumo Logic)**:  
+   - **Reason**: To collect metrics, logs, and events from different components of the infrastructure (web servers, application servers, databases, etc.).  
+   - **Benefit**: Provides real-time insights into the system's health, performance, and security, allowing proactive management and troubleshooting.
+
+---
+
+### What are firewalls for?
+
+- **Purpose**: Firewalls act as a barrier between the trusted internal network and external threats (such as the internet). They filter traffic based on rules that define which traffic should be allowed or blocked.  
+  - **Benefit**: Firewalls help to prevent unauthorized access, mitigate potential attacks (like DDoS or SQL injection), and protect sensitive data within the network.  
+  - **Example**: Blocking inbound traffic on specific ports or IP addresses that are known to be malicious.
+
+---
+
+### Why is the traffic served over HTTPS?
+
+- **Reason**: HTTPS (HyperText Transfer Protocol Secure) encrypts the data exchanged between the client and the server. This ensures that the communication cannot be easily intercepted or modified by attackers.  
+  - **Benefit**: 
+    - Protects the confidentiality and integrity of data.
+    - Ensures user privacy and builds trust with users who see the padlock icon in the browser.
+    - Improves SEO rankings, as search engines prefer secure websites.
+
+---
+
+### What monitoring is used for?
+
+- **Purpose**: Monitoring tools are used to collect data on system performance, track application behavior, and identify issues or anomalies.  
+  - **Benefit**: Enables system administrators and DevOps teams to track the health and performance of the infrastructure, detect errors or bottlenecks, and respond to potential issues before they escalate.  
+  - **Examples**: Monitoring CPU usage, memory usage, response times, error rates, and network traffic.
+
+---
+
+### How is the monitoring tool collecting data?
+
+- **Collection Process**: Monitoring tools typically collect data by using agents or clients installed on the systems they monitor (such as the web servers or databases). These agents gather logs, metrics, and other performance data, and send it to a central monitoring service (e.g., Sumo Logic).  
+  - **Benefit**: Centralized data collection allows for easy analysis, reporting, and alerting. It also provides insights into trends and allows for historical data comparison.  
+  - **Example**: A client collects server CPU usage, disk I/O, and memory consumption, sending this data every minute to the monitoring tool.
+
+---
+
+### Explain what to do if you want to monitor your web server QPS (Queries Per Second)?
+
+- **Steps**:
+  1. **Install Monitoring Agent**: Install a monitoring client (e.g., Datadog, Prometheus, or Sumo Logic) on the web server.
+  2. **Track HTTP Requests**: Configure the agent to track incoming HTTP requests to the web server. This can typically be done by reading the web server logs or using an HTTP request counter.
+  3. **Calculate QPS**: The agent can aggregate the data and calculate the QPS (number of requests served per second). Set up dashboards or alerts to track this metric over time.
+  4. **Alerting**: Configure alerts for thresholds (e.g., if QPS exceeds a certain number) to ensure you are notified of potential spikes or issues.
+  - **Benefit**: Monitoring QPS helps identify if the server is under heavy load, allowing for better capacity planning and load balancing.
+
+---
+
+## Issues with this infrastructure
+
+### Why terminating SSL at the load balancer level is an issue?
+
+- **Issue**: Terminating SSL at the load balancer means that the encrypted traffic is decrypted at the load balancer, and the data sent to the web servers may not be encrypted.  
+  - **Concern**: This could expose sensitive data to security risks, especially if the internal communication between the load balancer and web servers is not secure.  
+  - **Alternative**: SSL termination should ideally occur at the web server level or across a secure internal network to prevent data exposure.
+
+---
+
+### Why having only one MySQL server capable of accepting writes is an issue?
+
+- **Issue**: A single MySQL server handling all write operations (the primary node) is a **Single Point of Failure (SPOF)**. If the primary MySQL server goes down, write operations are halted, impacting the application's functionality.  
+  - **Concern**: It limits scalability and availability. If you need to scale out, you can't write to multiple databases at once.  
+  - **Solution**: Implement **master-slave replication** or **multi-master replication** to allow for distributed writes and ensure redundancy.
+
+---
+
+### Why having servers with all the same components (database, web server, and application server) might be a problem?
+
+- **Issue**: Having a single server running all components can cause resource contention (e.g., high CPU usage or memory pressure) and limits the ability to scale each component independently.  
+  - **Concern**:  
+    - If the web server becomes overloaded, the database and application server components may also suffer, even if they are not under load.
+    - A failure in any component (e.g., database) can bring down the entire server, affecting all services.
+  - **Solution**: It’s better to **separate concerns** by running the web, application, and database servers on different machines or containers to isolate failures and improve performance and scalability.
+

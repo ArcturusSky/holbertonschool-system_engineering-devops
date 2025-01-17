@@ -1,0 +1,93 @@
+# Task 3- Scale up
+
+## Diagram (click to zoom in)
+
+![Diagram](./split_infrastructure_diagram.png)
+
+## Questions
+
+### For every additional element, why are you adding it?
+
+1. **1 Server**:  
+   - **Reason**: This server will handle one of the core components of the infrastructure (e.g., the web server, application server, or database).  
+   - **Benefit**: Helps isolate each component, reducing resource contention and making it easier to scale individual services independently.
+
+2. **1 Load Balancer (HAproxy) Configured as Cluster with Another One**:  
+   - **Reason**: To distribute incoming traffic efficiently across multiple servers, ensuring high availability and fault tolerance. The load balancer is configured in a cluster for redundancy.  
+   - **Benefit**: This setup prevents a single point of failure (SPOF) and ensures that if one load balancer goes down, the other can continue managing the traffic.
+
+3. **Split Components (Web Server, Application Server, Database) with Their Own Server**:  
+   - **Reason**: Each component is isolated on its own server to avoid resource contention and improve scalability. This also helps with fault isolation, as issues in one component won’t affect the others.  
+   - **Benefit**:  
+     - **Web Server**: Handles static content and can be scaled independently of other components.
+     - **Application Server**: Manages business logic and can be optimized or scaled based on application needs.
+     - **Database Server**: Focuses on data storage, ensuring that database queries don’t overload the other servers.
+
+---
+
+### What is the role of a load balancer?
+
+- **Purpose**: A load balancer distributes incoming network or application traffic across multiple servers to ensure no single server becomes overwhelmed. It improves the system's scalability, availability, and fault tolerance.  
+  - **Benefit**: Prevents a single server from becoming a bottleneck, ensures smooth traffic flow even during high traffic volumes, and provides high availability by rerouting traffic in case of a failure.
+  - **Example**: HAproxy is used to distribute requests between multiple web servers, ensuring even load distribution and fault tolerance.
+
+---
+
+### Why are the components split into different servers?
+
+- **Reason**: Splitting components into different servers reduces the risk of resource contention (e.g., CPU or memory overload) and allows each component to be optimized for its specific function.  
+  - **Benefit**:  
+    - Each component (web, application, and database servers) can scale independently based on demand. For instance, if more web traffic is expected, only the web server can be scaled up without affecting the database or application server.
+    - Isolates failures, so an issue with the web server won’t affect the application or database servers.
+    - Better resource management and optimization for each server type.
+
+---
+
+### What is the advantage of configuring the load balancer in a cluster?
+
+- **Reason**: Configuring the load balancer in a cluster ensures that if one load balancer fails, the other one takes over without interrupting traffic. This creates redundancy and high availability for the load balancer itself.  
+  - **Benefit**:  
+    - **High Availability**: The cluster setup eliminates a single point of failure, ensuring uninterrupted service even if one of the load balancers goes down.
+    - **Failover**: Traffic is rerouted to the secondary load balancer automatically if the primary one fails.
+
+---
+
+## Issues with this infrastructure
+
+### Why might relying on just one load balancer be an issue?
+
+- **Issue**: If only one load balancer is used without clustering, it creates a **Single Point of Failure (SPOF)**. If the load balancer fails, all traffic will be lost, leading to downtime for the entire application.  
+  - **Concern**: The absence of redundancy means if the load balancer crashes, the entire infrastructure could become inaccessible.  
+  - **Solution**: Configuring a load balancer cluster, as done in this setup, eliminates this risk by providing a failover mechanism.
+
+---
+
+### Why might having separate servers for each component be a problem?
+
+- **Issue**: While separating components is generally beneficial, it can lead to **increased complexity** in managing multiple servers and network traffic between them. Additionally, if the components aren't well optimized, **communication latency** between servers (especially between the application and database) can arise.  
+  - **Concern**:  
+    - **Network Overhead**: Traffic between servers can cause network congestion or delays.
+    - **Complexity**: More servers mean more resources are needed for server management, monitoring, and maintenance.
+    - **Scaling**: It can be challenging to scale certain components if resources are not properly allocated.
+  - **Solution**: Careful architecture planning, network optimization, and efficient resource allocation are key to mitigating these challenges. Also, using technologies like containerization (e.g., Docker) can reduce the complexity of managing multiple servers.
+
+---
+
+### Why is having only one database server accepting writes an issue?
+
+- **Issue**: With only one database server capable of accepting writes, the system is limited by the capacity and availability of that single server. If this database server fails, all write operations will stop.  
+  - **Concern**:  
+    - **Single Point of Failure (SPOF)**: If the database server goes down, the application can’t process any write requests, affecting the entire system.
+    - **Scalability**: The single database server may struggle to handle a large volume of write requests as traffic grows.
+  - **Solution**: Implement **database replication** (e.g., master-slave or multi-master) to allow multiple database nodes to handle write requests, providing redundancy and improving scalability.
+
+---
+
+### Why might having a server running both the web server and the database be an issue?
+
+- **Issue**: Running both the web server and the database on the same server can cause **resource contention**, as both components may compete for CPU, memory, and disk I/O.  
+  - **Concern**:  
+    - **Performance Degradation**: If the web server experiences high traffic, it can consume significant resources, leaving fewer resources for the database, potentially causing slower queries or timeouts.
+    - **Scalability Limitation**: It's harder to scale the web server and database independently. For example, if the application grows and needs more database capacity, you can’t scale the database without also scaling the web server.
+  - **Solution**: Isolate the database and web server into separate servers (as done in the new setup), allowing them to scale and be optimized independently for their respective tasks.
+
