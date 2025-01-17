@@ -1,230 +1,202 @@
-# Network Protocols Explained Simply
+This repository will hold the first steps into system engineering and networks.
 
-- [Network Protocols Explained Simply](#network-protocols-explained-simply)
-  - [1. Introduction to Network Protocols](#1-introduction-to-network-protocols)
-  - [2. OSI Model](#2-osi-model)
-  - [3. TCP/IP Model](#3-tcpip-model)
-  - [4. Types of Network Protocols](#4-types-of-network-protocols)
-  - [5. Implementation and Vulnerabilities](#5-implementation-and-vulnerabilities)
-  - [6. Key Protocols for Web and Mobile Development](#6-key-protocols-for-web-and-mobile-development)
-    - [6.1 Web Protocols](#61-web-protocols)
-    - [6.2 Mobile Protocols](#62-mobile-protocols)
-  - [7. Security Considerations](#7-security-considerations)
-  - [8. Importance for Developers](#8-importance-for-developers)
-- [Understanding IP Addresses](#understanding-ip-addresses)
-  - [1. Definition of an IP Address](#1-definition-of-an-ip-address)
-  - [2. Types of IP Addresses](#2-types-of-ip-addresses)
-  - [3. IP Classes and Reservations (IPv4)](#3-ip-classes-and-reservations-ipv4)
-  - [4. Subnets](#4-subnets)
-  - [5. Finding Your IP Address](#5-finding-your-ip-address)
-- [TCP/IP: Transmission Control Protocol/Internet Protocol](#tcpip-transmission-control-protocolinternet-protocol)
-  - [1. Key Components](#1-key-components)
-    - [TCP (Transmission Control Protocol)](#tcp-transmission-control-protocol)
-    - [IP (Internet Protocol)](#ip-internet-protocol)
-  - [2. How TCP/IP Works](#2-how-tcpip-works)
-    - [Communication Process](#communication-process)
-  - [3. Importance of TCP/IP](#3-importance-of-tcpip)
-  - [4. Use Cases](#4-use-cases)
-  - [5. TCP vs UDP](#5-tcp-vs-udp)
-- [Port Numbers in Networking](#port-numbers-in-networking)
-  - [Definition](#definition)
-  - [Function](#function)
-  - [Key Points](#key-points)
-  - [When Port Numbers Matter](#when-port-numbers-matter)
-  - [Open vs Closed Ports](#open-vs-closed-ports)
-  - [Port Scanning](#port-scanning)
-  - [Viewing Active Connections](#viewing-active-connections)
+# Simplified Technical Concepts
 
+## 🌐 Question #0 - What is a server?
 
-## 1. Introduction to Network Protocols
+### 🔍 Simple Definition
+A server is a device, virtual appliance, or computer program that provides functionality to other programs or devices called "clients".
 
-A network protocol is a set of rules that define how data is formatted, sent, and received between different devices (computers, servers, routers, etc.), regardless of their infrastructure or design.
+### ⚙️ How it works
+- **Request**: A client sends a request to the server for information or services.
+- **Processing**: The server receives the request, processes it, and checks permissions if necessary.
+- **Response**: The server returns the requested information to the client.
 
-Key points:
-- Enable efficient device communication
-- Essential for modern networks like the Internet
+### 🍽️ Analogy
+Think of a server as a maître d' in a restaurant:
+- The client (user) makes an order (request).
+- The maître d' (server) goes to the kitchen (file system) to retrieve the dish (content).
+- It then serves the dish to the customer (sends the response).
 
-## 2. OSI Model
+### 📚 Examples of servers
+- File server: Manages the storage and sharing of documents.
+- Mail server: Manages the sending and receiving of emails.
 
-The OSI (Open Systems Interconnection) model organizes protocols into 7 layers:
+### 🔑 Importance
+Servers are essential for the operation of computer networks, because they allow clients to access resources and services.
 
-1. Physical: Transmits bits via cables, fibers, or signals
-2. Data Link: Assembles data into blocks and corrects errors
-3. Network: Routes and divides data into small packets
-4. Transport: Ensures reliable data transmission between devices
-5. Session: Manages connections (authentication and synchronization)
-6. Presentation: Translates and secures data (encryption, formatting)
-7. Application: User interface (email, web browsing, file transfers)
+---
 
-Each layer uses headers or footers to identify and process data.
+## 🌐 Question #1 - What is a web server?
 
-## 3. TCP/IP Model
+### 🔍 Simple definition
+A web server is a software or physical device that serves web pages to users via the HTTP protocol.
 
-The TCP/IP model, the foundation of the Internet, simplifies the OSI model into 4 layers:
+### ⚙️ How it works
+- **Request**: When a user enters a URL in their browser, an HTTP request is sent to the web server.
+- **Processing**: The server identifies the requested file and retrieves it.
+- **Response**: The server sends the web page to the user's browser.
 
-1. Application: Protocols like HTTP, SMTP, FTP
-2. Transport: Ensures transmission reliability (TCP, UDP)
-3. Internet: Addressing and routing (IP, ARP)
-4. Network Access: Communicates with hardware (Ethernet, MAC)
+### 🍽️ Analogy
+Think of a web server as a maître d' in a restaurant:
+- He takes your order (request).
+- Gets your food (web page).
+- Serves it to you (displays it in the browser).
 
-## 4. Types of Network Protocols
+### 📚 Examples of web servers
+- **Apache**: One of the most widely used web servers, known for its flexibility.
+- **Nginx**: Renowned for its high performance and efficient resource management.
 
-1. Communication: e.g., HTTP, TCP (for data exchange)
-2. Management: e.g., SNMP (for network monitoring and administration)
-3. Security: e.g., HTTPS, SSL (for protecting data in transit)
+### 🔑 Importance
+Web servers are crucial for accessing websites and online applications.
 
-## 5. Implementation and Vulnerabilities
+---
 
-- Protocols are integrated into hardware or software systems
-- Vulnerabilities: Some protocols lack protection, facilitating attacks like route hijacking or DDoS attacks (e.g., SYN flood attack)
+## 🌐 Question #2 - What is a codebase?
 
-## 6. Key Protocols for Web and Mobile Development
+### 🔍 Simple definition
+A codebase is the complete collection of source code used to build a software system.
 
-### 6.1 Web Protocols
-- HTTP/HTTPS: Basic protocol for loading web pages. HTTPS adds security via SSL/TLS
-- DNS: Translates domain names (e.g., example.com) to IP addresses
-- FTP: Allows file transfer to a server
+### ⚙️ How it works
+- Contains all the files needed to develop and maintain the software.
+- Allows developers to work on different parts of the software in a coordinated manner.
 
-### 6.2 Mobile Protocols
-- REST or GraphQL APIs: Often rely on HTTP(S) to exchange data between a mobile app and a server
+### 🍽️ Analogy
+It's like a complete cooking recipe:
+- All the ingredients (files) are together.
+- All the steps (functions) are described.
 
-## 7. Security Considerations
+### 📚 Codebase examples
+- Codebase of an open source project on GitHub.
+- Codebase of a mobile application developed by a team.
 
-- Common issues: DDoS attacks or eavesdropping
-- Best practice: Use HTTPS to secure communications for web and mobile applications
+### 🔑 Importance
+The codebase is essential to ensure that the software works properly and can be updated or improved.
 
-## 8. Importance for Developers
+---
 
-- Understanding protocols like HTTP/HTTPS helps in interacting with servers and diagnosing network issues
-- Knowledge of TCP/IP and layers allows for better optimization and security of applications (latency, error handling)
-- Data security in transit is critical, especially in mobile applications where users expect maximum protection
+## 🌐 Question #3 - What is a database?
 
-Remember: Familiarize yourself with HTTP, HTTPS, TCP, UDP, and DNS, as they form the basis of all modern web and mobile development. Add to this an understanding of network security to ensure a better user experience.
+### 🔍 Simple definition
+A database is a collection of information stored and organized to be easily accessible, updated, and managed.
 
-# Understanding IP Addresses
+### ⚙️ How it works
+- Stores data in a structured form.
+- Allows operations like searching, adding, and modifying data.
 
-## 1. Definition of an IP Address
+### 🍽️ Analogy
+Imagine a well-organized library:
+- Books (data) are categorized.
+- You can easily find, add, or modify books.
 
-An IP (Internet Protocol) address is a unique identifier allowing computers to communicate on a network, similar to a postal address for data.
+### 📚 Examples of databases
+- **MySQL**: Relational database management system.
+- **MongoDB**: Document-oriented NoSQL database.
 
-- IPv4: 32 bits, decimal format (e.g., 192.168.1.1)
-- IPv6: 128 bits, hexadecimal format (e.g., 2001:db8::1)
-  - Created to address the shortage of IPv4 addresses
+### 🔑 Importance
+Databases are essential for efficiently managing information in modern applications.
 
-## 2. Types of IP Addresses
+---
 
-- Static: Fixed, less common, often used locally
-- Dynamic: Temporarily assigned via DHCP, most widespread
+## 🌐 Question #4 - What is a DNS?
 
-## 3. IP Classes and Reservations (IPv4)
+### 🔍 Simple definition
+DNS (Domain Name System) is a system that translates domain names into IP addresses.
 
-Addresses are divided into ranges reserved for specific uses:
+### ⚙️ How it works
+- When a user types in a URL, DNS locates the corresponding IP address.
+- Allows browsers to access the appropriate web servers.
 
-- 0.0.0.0: Default network
-- 127.0.0.1: Loopback address (refers to the computer itself)
-- 169.254.x.x: Automatically assigned in case of DHCP failure
-- Classes A, B, C: Used for private and public networks
-  - Class A: 10.0.0.0 – 10.255.255.255
-  - Class B: 172.16.0.0 – 172.31.255.255
-  - Class C: 192.168.0.0 – 192.168.255.255
+### 🍽️ Analogy
+It's like a phone book:
+- You look up a name (domain).
+- DNS gives you the corresponding number (IP address).
 
-## 4. Subnets
+### 📚 Examples of DNS
+- Public DNS servers like Google DNS (8.8.8.8).
+- DNS systems used by Internet Service Providers.
 
-A subnet divides a network into segments for better management:
+### 🔑 Importance
+DNS is crucial for browsing the Internet because it allows you to use easy-to-remember names instead of numeric IP addresses.
 
-Example:
-- IP Address: 192.168.1.102
-- Subnet Mask: 255.255.255.0
-- Subnet Range: 192.168.1.0 – 192.168.1.255
+---
 
-## 5. Finding Your IP Address
+## 🌐 Question #5 - What is HTTPS?
 
-- Windows: Open "cmd" → Type ipconfig
-- Mac: System Preferences → Network
-- Mobile: Settings → WiFi → Network Information
+### 🔍 Simple Definition
+HTTPS (Hypertext Transfer Protocol Secure) is a secure version of the HTTP protocol that encrypts communications between the browser and the web server.
 
-Key takeaway: IP addresses enable communication on networks. Understanding their functioning (IPv4, IPv6, DHCP, subnets) is essential for managing networks or developing connected applications.
+### ⚙️ Fonctionnement
+- Chiffre les données échangées pour protéger la confidentialité.
+- Utilise des certificats SSL/TLS pour établir une connexion sécurisée.
 
-# TCP/IP: Transmission Control Protocol/Internet Protocol
+### 🍽️ Analogie
+C'est comme envoyer une lettre dans une enveloppe scellée :
+- Le contenu est protégé contre les regards indiscrets.
+  
+### 📚 Exemples d'utilisation d'HTTPS
+- Sites bancaires en ligne qui traitent des informations sensibles.
+- Plateformes e-commerce qui protègent les données des clients.
 
-TCP/IP is a set of standard protocols that govern how devices communicate on networks like the internet. It forms the foundation of nearly all modern network communications.
+### 🔑 Importance
+HTTPS est essentiel pour sécuriser les transactions en ligne et protéger la vie privée des utilisateurs sur Internet.
 
-## 1. Key Components
+---
 
-### TCP (Transmission Control Protocol)
-- Manages data reliability and integrity
-- Segments data, transmits it, and reassembles it at the destination
-- Ensures retransmission of lost or damaged data
-- Example: Sending a file or loading a web page
+## 🌐 Question #6 - What is TCP/IP?
 
-### IP (Internet Protocol)
-- Handles addressing and routing of data
-- Ensures data reaches the correct destination using unique IP addresses
-- Two versions: IPv4 and IPv6
+### 🔍 Simple Definition
+TCP/IP (Transmission Control Protocol/Internet Protocol) is a set of protocols used to interconnect network devices over the Internet or any private network.
 
-## 2. How TCP/IP Works
+### ⚙️ How it works
+- Defines how data should be packaged, addressed, transmitted, routed, and received.
 
-1. Data (text, video, audio) is divided into packets
-2. Each packet contains:
-   - Source address
-   - Destination address
-   - Part of the data
+### 🍽️ Analogy
+Think of it like the rules of the road on the highway:
+- How "cars" (data) move across the network.
 
-### Communication Process
-1. Application layer: User interacts with an application (e.g., web browser)
-2. Transport layer (TCP): Data is segmented with sequence numbers
-3. Internet layer (IP): Packets are sent with IP addresses
-4. Network layer: Packets traverse the physical network to the destination
-5. Reassembly: TCP reconstructs data for the application
+### 📚 Examples of TCP/IP usage
+- Used whenever you browse the web or send an email.
 
-## 3. Importance of TCP/IP
+### 🔑 Importance
+TCP/IP is fundamental to the functioning of the Internet, as it allows communication between different types of devices and networks.
 
-- Interoperability: All TCP/IP devices can communicate regardless of manufacturer
-- Reliability: TCP ensures error-free transmission
-- Flexibility: Compatible with various network types (WiFi, Ethernet, fiber, etc.)
-- Scalability: Adapts to millions of connected devices on the internet
+## 🌐 Question #5 - What is HTTPS?
 
-## 4. Use Cases
+### 🔍 Simple Definition
+HTTPS (Hypertext Transfer Protocol Secure) is a secure version of the HTTP protocol that encrypts communications between the browser and the web server.
 
-- Web (HTTP/HTTPS): Loading web pages
-- Emails (SMTP, IMAP, POP3): Transmitting electronic messages
-- File transfer (FTP, SFTP): Downloading or uploading files
-- Streaming (YouTube, Netflix): Real-time video/audio transmission
+### ⚙️ How it works
+- Encrypts data exchanged to protect confidentiality.
+- Uses SSL/TLS certificates to establish a secure connection.
 
-## 5. TCP vs UDP
+### 🍽️ Analogy
+It's like sending a letter in a sealed envelope:
+- The contents are protected from prying eyes.
 
-- TCP: Reliable but slower (used for web, emails)
-- UDP (User Datagram Protocol): Less reliable but faster (used for streaming, online gaming)
+### 📚 Examples of HTTPS use cases
+- Online banking sites that handle sensitive information.
+- E-commerce platforms that protect customer data.
 
-In summary, TCP/IP is the universal language of networks, enabling efficient communication between different devices via the internet or other networks.
+### 🔑 Importance
+HTTPS is essential for securing online transactions and protecting users' privacy on the Internet.
 
-# Port Numbers in Networking
+---
 
-## Definition
-Port numbers are part of the addressing information used to identify senders and receivers of messages in computer networking. They are associated with TCP/IP network connections and can be considered an add-on to the IP address.
+## 🌐 Question #6 - What is TCP/IP?
 
-## Function
-- Allow different applications on the same computer to share network resources simultaneously
-- Work like telephone extensions, with the IP address as the main number and ports as extensions
+### 🔍 Simple Definition
+TCP/IP (Transmission Control Protocol/Internet Protocol) is a set of protocols used to interconnect network devices over the Internet or any private network.
 
-## Key Points
-1. Software-based, not related to physical ports
-2. Used by both TCP and UDP in TCP/IP networking
-3. Range from 0 to 65535
-4. Lower ranges dedicated to common internet protocols (e.g., port 25 for SMTP, port 21 for FTP)
+### ⚙️ How it works
+- Defines how data should be packaged, addressed, transmitted, routed, and received.
 
-## When Port Numbers Matter
-1. Network administration: Setting up port forwarding through firewalls
-2. Network programming: Specifying port numbers in code
-3. URL specification: Sometimes required in URLs (e.g., http://localhost:8080/)
+### 🍽️ Analogy
+Think of it like the rules of the road on the highway:
+- How "cars" (data) move across the network.
 
-## Open vs Closed Ports
-- Open ports: Have an associated application listening for new connection requests
-- Closed ports: Do not have an associated listening application
+### 📚 Examples of TCP/IP usage
+- Used whenever you browse the web or send an email.
 
-## Port Scanning
-- Used by professionals to measure network exposure
-- Used by hackers to probe for exploitable open ports
-
-## Viewing Active Connections
-Use the `netstat` command in Windows to see information about active TCP and UDP connections.
+### 🔑 Importance
+TCP/IP is fundamental to the functioning of the Internet, as it allows communication between different types of devices and networks.

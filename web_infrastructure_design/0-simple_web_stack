@@ -1,0 +1,81 @@
+# First step web stack infrastructure
+
+- [First step web stack infrastructure](#first-step-web-stack-infrastructure)
+  - [Diagram (click to zoom in)](#diagram-click-to-zoom-in)
+  - [Questions](#questions)
+    - [What is a server?](#what-is-a-server)
+    - [What is the role of the domain name?](#what-is-the-role-of-the-domain-name)
+    - [What type of DNS record "www" is in "www.foodbar.com"?](#what-type-of-dns-record-www-is-in-wwwfoodbarcom)
+    - [What is the role of a web server?](#what-is-the-role-of-a-web-server)
+    - [What is the role of the application server?](#what-is-the-role-of-the-application-server)
+    - [What is the role of the database?](#what-is-the-role-of-the-database)
+    - [What is the server using to communicate with the computer of the user requesting the website?](#what-is-the-server-using-to-communicate-with-the-computer-of-the-user-requesting-the-website)
+  - [Issues with this infrastructure](#issues-with-this-infrastructure)
+    - [SPOF](#spof)
+    - [Downtime](#downtime)
+    - [Scaling](#scaling)
+  - [Solutions ?](#solutions-)
+    - [Redundancy](#redundancy)
+    - [Load-balancer](#load-balancer)
+
+
+## Diagram (click to zoom in)
+
+![Diagram](./simple_web_infrastructure_diagram.png)
+
+## Questions
+
+### What is a server?
+A server is a device , virtual or physical, running on an OS, that provides functionality to other programs or devices called "clients". Usually server are in big datacenters because it requires lot of power.
+Some examples: File server, Mail server
+
+### What is the role of the domain name?
+Domain Name or "DNS" for Domain Name System is a system that translates domain names into IP addresses.
+So when the user types in a URL, DNS locates the corresponding IP address and allows browsers to access the appropriate web servers.
+Some example: Public DNS server like Google DNS (8.8.8.8), DNS system used bu Internet Service Providers.
+
+
+### What type of DNS record "www" is in "www.foodbar.com"?
+"www" is a subdomain. It's part of  the full domain name and is used to point users to a specific servers or services.
+In terms of DNS record. It's a label in the domain name system, often linked to an "A record" (which is a direct IP) or a CNAME record (which means an alias to another domain). Here to an A record because it resolves to an IP address and not an alias for another domain
+
+
+### What is the role of a web server?
+A web server serves static content (such as HTML files, images, or CSS) to users via the HTTP protocol. When a user enters a URL in their browser, an HTTP request is sent to the web server. The web server identifies the requested file and retrieves it, then sends it to the user's browser.
+Some examples: Apache, Nginx
+
+### What is the role of the application server?
+An application server handles dynamic content. It processes user requests, runs application logic (such as logging in or searching), interacts with the database, and sends the results back to the web server. The web server then delivers this content to the user's browser. It's the "brain" of the application, responsible for the backend.
+
+### What is the role of the database?
+A database is a collection of information stored and organized to be easily accessible, updated, and managed. It's role then is to stores data in a structured form and allow operations on it like searching, adding and modifying these datas.
+Here the role of the database is to store the application's data (users etc)
+Some example: MySQL, MongoDB
+
+
+### What is the server using to communicate with the computer of the user requesting the website?
+To communicate with the computer of the user, the server is using the HTTP protocol (HyperText Transfer Protocol), which runs over a network using TCP/IP (Transmission Control Protocol/Internet Protocol). TCP/IP is the fundamental set of protocols that allow different devices to communicate over the internet. HTTP transfers data like web pages, images, and videos between the server and the user's browser. The data travels over the internet via TCP/IP, ensuring that the information is sent and received reliably.
+
+
+##  Issues with this infrastructure
+
+### SPOF
+Since the whole infrastructure relied on only one server (no redundancy) if the server goes down for any reason (hardware or sofware issues) the whole website goes down with it. So everything relies on a **Single Point Of Failure**
+
+### Downtime
+As said earlier, since the whole infrastructure relied on only one server, if anything is needed to be done on that server (updating, maintanability, changed or else) then the server while have to be down for an undetermined amount of time if new code is deployed and will also need to be restarted.
+
+### Scaling
+And still on the same note: since only one server, at some point if the traffic grows or experience a sudden peak, the server won't be able to follow and hold everything. Which could lead to a crash at the worst possible moment.
+
+## Solutions ?
+
+To avoird all the issue of this infrastrcture, some things could be done such as:
+
+### Redundancy
+
+Redundancy means having a backup systems in place (like extra servers or databses) to ensure that the website will keep working even if one part fails. This will help to prevent downtime when maintenance or else and avoid the SPOF.
+
+### Load-balancer
+
+Using a load balancer (like Road Robin or Hash) to balance the traffic between multiple servers.
